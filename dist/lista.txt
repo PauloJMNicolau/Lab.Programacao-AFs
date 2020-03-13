@@ -38,6 +38,8 @@ sacas
 saias
 salas
 socos
+aa
+bb
 aprovado
 amigo pessoal
 amigo

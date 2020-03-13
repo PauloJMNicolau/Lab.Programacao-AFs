@@ -32,11 +32,16 @@ Palindromos * verificaListaPalavras(char * ficheiro){
             exit(EXIT_FAILURE);
         }
         palavra = lerPalavra(fp, palavra);
-        int res =1;
-        res = palavraPalindromo(palavra);
-        if(res){
-            lista = inserirNaLista(lista,palavra);
-        }else{
+        if(strlen(palavra)>=3){
+            int res =1;
+            res = palavraPalindromo(palavra);
+            if(res){
+                lista = inserirNaLista(lista,palavra);
+            }else{
+                free(palavra);
+                palavra=NULL;
+            }
+        } else{
             free(palavra);
             palavra=NULL;
         }
