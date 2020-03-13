@@ -9,10 +9,6 @@ Palindromos * criarLista();
 Palindromos * verificaListaPalavras(char * ficheiro);
 //Ler  do ficheiro
 char * lerPalavra(FILE * ficheiro, char* palavra);
-//Palavra em Minuscula
-void palavraEmMinuscula(char * palavra);
-//Inverter Palavra
-char * inverterPalavra(char * palavra);
 //Verifica se palavra é palindromo
 const int palavraPalindromo(char*palavra);
 //Inserir na Lista

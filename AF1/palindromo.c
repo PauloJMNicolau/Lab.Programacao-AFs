@@ -6,7 +6,7 @@
 
 //Criar Lista vazia
 Palindromos * criarLista(){
-    Palindromos * lista = malloc(sizeof(Palindromos));
+    Palindromos * lista = calloc(1,sizeof(Palindromos));
     if(!lista){
         printf("Erro: Não foi possivel criar lista");
         exit(EXIT_FAILURE);
@@ -18,7 +18,6 @@ Palindromos * criarLista(){
 
 //Verificar ficheiro de palavras
 Palindromos * verificaListaPalavras(char * ficheiro){
-    
     FILE * fp = fopen(ficheiro, "r");
     if(!fp){
         printf("Erro: Não foi possivel abrir ficheiro %s", ficheiro);
@@ -32,15 +31,8 @@ Palindromos * verificaListaPalavras(char * ficheiro){
             exit(EXIT_FAILURE);
         }
         palavra = lerPalavra(fp, palavra);
-        if(strlen(palavra)>=3 && strlen(palavra)<=10){
-            int res =1;
-            res = palavraPalindromo(palavra);
-            if(res){
-                lista = inserirNaLista(lista,palavra);
-            }else{
-                free(palavra);
-                palavra=NULL;
-            }
+        if((strlen(palavra)>=3 && strlen(palavra)<=10) && palavraPalindromo(palavra) ){
+            lista = inserirNaLista(lista,palavra);
         } else{
             free(palavra);
             palavra=NULL;
@@ -55,18 +47,10 @@ char * lerPalavra(FILE * ficheiro, char* palavra){
     if(ficheiro && palavra){
         fscanf(ficheiro,"%s", palavra);
         removerSimbolos(palavra);
-        palavraEmMinuscula(palavra);
+        for(int i =0; palavra[i]!='\0';i++)
+            palavra[i]=tolower(palavra[i]);
     }
     return palavra;
-}
-
-//Palavra em Minuscula
-void palavraEmMinuscula(char * palavra){
-    if(palavra){
-        for(int i =0; palavra[i]!='\0';i++)
-            if(palavra[i]>='A' && palavra[i]<='Z')
-                palavra[i]=palavra[i]+32;
-    }
 }
 
 //Inserir na Lista
@@ -80,27 +64,14 @@ Palindromos * inserirNaLista(Palindromos * lista, char * palavra){
 //Verifica se palavra é palindromo
 const int palavraPalindromo(char*palavra){
     if(palavra){
-        char * inversa = inverterPalavra(palavra);
-        int res=strncmp(palavra,inversa,10);
-        free(inversa);
-        if(!res)
-            return 1;
+        int tamanho = strlen(palavra);
+        for(int i=0,e=tamanho-1; i<tamanho/2;i++,e--){
+            if(palavra[i]!=palavra[e])
+                return 0;
+        }
+        return 1;
     }
     return 0;
-}
-
-//Inverter Palavra
-char * inverterPalavra(char * palavra){
-    char * aux = NULL;
-    aux=calloc(11,sizeof(char));
-    if(!aux){
-        printf("Erro: Não foi possivel alocar memória para palavra");
-        exit(EXIT_FAILURE);
-    }
-        for(int i=0, e=(strlen(palavra)-1);i<(strlen(palavra));i++,e--)
-            aux[i]=palavra[e];
-    
-    return aux;
 }
 
 //Apagar Lista
@@ -126,9 +97,9 @@ int contarPalavras(Palindromos * lista){
 
 //Imprimir Lista
 void imprimirLista(Palindromos * lista){
+    Palindromos *aux = lista;
     printf("Existem %d palavras que são palindromos no ficheiro.",contarPalavras(lista) );
     printf("\nA lista de palavras encontradas é:\n");
-    Palindromos *aux = lista;
     while(aux!=NULL){
         printf("\t%s\n", aux->palavra);
         aux=aux->proximo;
@@ -151,7 +122,7 @@ void removerSimbolos(char * palavra){
         exit(EXIT_FAILURE);
     }
     while(palavra[i]!='\0'){
-        if((palavra[i]>='a' && palavra[i]<='z') ||(palavra[i]>='A' && palavra[i]<='Z') ){
+        if(isalpha(palavra[i])){
             aux[e] = palavra[i];
             e++;
         }
