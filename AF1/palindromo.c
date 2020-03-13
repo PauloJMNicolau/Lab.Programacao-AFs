@@ -26,13 +26,13 @@ Palindromos * verificaListaPalavras(char * ficheiro){
     }
     Palindromos * lista=NULL;
     while(!feof(fp)){
-        char * palavra = malloc(10 * sizeof(char));
+        char * palavra = calloc(10 ,sizeof(char));
         if(!palavra){
             printf("Erro: Não foi possivel alocar memória para palavra");
             exit(EXIT_FAILURE);
         }
         palavra = lerPalavra(fp, palavra);
-        if(strlen(palavra)>=3){
+        if(strlen(palavra)>=3 && strlen(palavra)<=10){
             int res =1;
             res = palavraPalindromo(palavra);
             if(res){
@@ -49,8 +49,6 @@ Palindromos * verificaListaPalavras(char * ficheiro){
     fclose(fp);
     return lista;
 }
-
-
 
 //Ler  do ficheiro
 char * lerPalavra(FILE * ficheiro, char* palavra){
@@ -94,7 +92,7 @@ const int palavraPalindromo(char*palavra){
 //Inverter Palavra
 char * inverterPalavra(char * palavra){
     char * aux = NULL;
-    aux=malloc(sizeof(char) * 10);
+    aux=calloc(11,sizeof(char));
     if(!aux){
         printf("Erro: Não foi possivel alocar memória para palavra");
         exit(EXIT_FAILURE);
@@ -147,7 +145,7 @@ int main(){
 //Remover Simbolos da Palavra
 void removerSimbolos(char * palavra){
     int i =0,  e = 0;
-    char *aux = malloc(sizeof(char)*10);
+    char *aux = calloc(11,sizeof(char));
     if(!aux){
         printf("Erro: Não foi possivel alocar memória para palavra");
         exit(EXIT_FAILURE);
@@ -159,6 +157,7 @@ void removerSimbolos(char * palavra){
         }
         i++;
     }
-    strncpy(palavra, aux,10);
+    if(strncmp(aux,palavra,10)!=0)
+        snprintf(palavra,sizeof(aux),"%s",aux);
     free(aux);
 }
