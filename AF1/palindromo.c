@@ -50,10 +50,13 @@ Palindromos * verificaListaPalavras(char * ficheiro){
     return lista;
 }
 
+
+
 //Ler  do ficheiro
 char * lerPalavra(FILE * ficheiro, char* palavra){
     if(ficheiro && palavra){
         fscanf(ficheiro,"%s", palavra);
+        removerSimbolos(palavra);
         palavraEmMinuscula(palavra);
     }
     return palavra;
@@ -139,4 +142,23 @@ int main(){
     imprimirLista(lista);
     apagarLista(lista);
     return 0;
+}
+
+//Remover Simbolos da Palavra
+void removerSimbolos(char * palavra){
+    int i =0,  e = 0;
+    char *aux = malloc(sizeof(char)*10);
+    if(!aux){
+        printf("Erro: Não foi possivel alocar memória para palavra");
+        exit(EXIT_FAILURE);
+    }
+    while(palavra[i]!='\0'){
+        if((palavra[i]>='a' && palavra[i]<='z') ||(palavra[i]>='A' && palavra[i]<='Z') ){
+            aux[e] = palavra[i];
+            e++;
+        }
+        i++;
+    }
+    strncpy(palavra, aux,10);
+    free(aux);
 }

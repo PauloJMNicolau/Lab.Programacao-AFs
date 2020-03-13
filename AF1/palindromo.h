@@ -23,3 +23,5 @@ void apagarLista(Palindromos * lista);
 int contarPalavras(Palindromos * lista);
 //Imprimir Lista
 void imprimirLista(Palindromos * lista);
+//Remover Simbolos da Palavra
+void removerSimbolos(char * palavra);
