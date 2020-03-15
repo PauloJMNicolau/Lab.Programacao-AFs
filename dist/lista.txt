@@ -5,6 +5,7 @@ rapar
 rodador
 anilina
 aia
+aça
 ala
 ama
 Ana
