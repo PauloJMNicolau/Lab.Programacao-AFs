@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include "AF1/palindromo.h"
 
+
 int main(){
+    setlocale(LC_ALL,"Portuguese");
     int modo = -1;
     char * ficheiro=calloc(MAX,sizeof(char));
     if(!ficheiro){
@@ -35,10 +38,10 @@ int main(){
     system("clear");
 
     //Imprimir lista encontrada
-    imprimirLista(lista);
+    //imprimirLista(lista);
 
     //Libertar memoria
-    apagarLista(lista);
+    //apagarLista(lista);
     free(ficheiro);
     ficheiro=NULL;
     return 0;
