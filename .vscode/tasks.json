@@ -11,6 +11,7 @@
                 "-g",
                 "-Wall",
                 "${file}",
+                "${fileDirname}/AF1/palindromo.c",
                 "-o",
                 "${workspaceFolder}/dist/${fileBasenameNoExtension}"
             ],

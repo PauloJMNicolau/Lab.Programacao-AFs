@@ -1,23 +1,37 @@
+#define MAX 50
+
 typedef struct palindromo{
-    char * palavra;
+    wchar_t * palavra;
     struct palindromo * proximo;
 }Palindromos;
 
-//Criar Lista vazia
-Palindromos * criarLista();
-//Verificar ficheiro de palavras
-Palindromos * verificaListaPalavras(char * ficheiro);
-//Ler  do ficheiro
-char * lerPalavra(FILE * ficheiro, char* palavra);
-//Verifica se palavra é palindromo
-const int palavraPalindromo(char*palavra);
-//Inserir na Lista
-Palindromos * inserirNaLista(Palindromos * lista, char * palavra);
-//Apagar Lista
-void apagarLista(Palindromos * lista);
+
+
 //Contar Palavras
-int contarPalavras(Palindromos * lista);
-//Imprimir Lista
-void imprimirLista(Palindromos * lista);
+int contarElementos(Palindromos * lista);
+
 //Remover Simbolos da Palavra
 void removerSimbolos(char * palavra);
+
+//Converter Carateres
+wchar_t converterCarater(wchar_t carater);
+//Remover Carateres especiais
+void removerCarateresEspeciais(int pos, int i, wchar_t * expressao);
+//Simplificar Carateres da Expressao
+wchar_t * simplificar(wchar_t * expressao);
+//Ler uma Expressão no ficheiro
+wchar_t * lerExpressao(FILE * ficheiro);
+
+Palindromos * lerFicheiro(char * ficheiro, int modo);
+
+//Inserir na Lista
+Palindromos * inserirNaLista(Palindromos * lista, wchar_t * palavra);
+//Apagar Lista
+void apagarLista(Palindromos * lista);
+//Imprimir Lista
+void imprimirLista(Palindromos * lista);
+//Criar Lista vazia
+Palindromos * criarLista();
+
+//Ler uma palavra do ficheiro
+wchar_t * lerPalavra(FILE * ficheiro);
