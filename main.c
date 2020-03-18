@@ -21,27 +21,17 @@ int main(){
     do{
         printf("Qual o modo de pesquisa que pretende fazer?\n\t0 - Palavras\n\t1-Frases\nModo: ");
         scanf("%d", &modo);
-        switch (modo){
-            //Executar Modo Palavra
-            case 0:
-            //Executar Modo Frase
-            case 1:
-                lista = lerFicheiro(ficheiro,modo);
-                break;
-            
-            default:
-                printf("\nModo não disponivel. Selecione novamente");
-        }
     }while(modo<0 || modo >=2);
 
+    lista = lerFicheiro(ficheiro,modo);
     //Apagar consola
     system("clear");
 
     //Imprimir lista encontrada
-    //imprimirLista(lista);
+    imprimirLista(lista);
 
     //Libertar memoria
-    //apagarLista(lista);
+    apagarLista(lista);
     free(ficheiro);
     ficheiro=NULL;
     return 0;
