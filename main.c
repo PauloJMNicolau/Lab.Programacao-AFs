@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <uchar.h>
+#include <wchar.h>
 #include "AF1/palindromo.h"
 
 
 int main(){
     setlocale(LC_ALL,"Portuguese");
+    setlocale(LC_CTYPE, "pt_PT.UTF-8");
     int modo = -1;
     char * ficheiro=calloc(MAX,sizeof(char));
     if(!ficheiro){
