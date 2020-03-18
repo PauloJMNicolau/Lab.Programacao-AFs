@@ -3,6 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <locale.h>
+#include <uchar.h>
+#include <wchar.h>
+#include <wctype.h>
 #include "palindromo.h"
 
 //Criar Lista vazia
@@ -57,7 +60,7 @@ Palindromos * lerFicheiro(char * ficheiro, int modo){
         exit(EXIT_FAILURE);
     }
     Palindromos * lista=NULL;
-    char * expressao = NULL;
+    char16_t * expressao = NULL;
     while(!feof(fp)){
         if(modo){
             expressao = lerExpressao(fp);
@@ -79,13 +82,14 @@ Palindromos * lerFicheiro(char * ficheiro, int modo){
 }
 
 //Ler uma Frase do ficheiro
-char * lerExpressao(FILE * ficheiro){
-    char * expressao = calloc(MAX,sizeof(char));
+char16_t * lerExpressao(FILE * ficheiro){
+    char16_t * expressao = calloc(MAX,sizeof(char));
     if(!expressao){
         printf("Erro: Não foi possivel alocar memória para palavra");
         exit(EXIT_FAILURE);
     }
-    fscanf(ficheiro, "%[^.].", expressao);
+
+    //fscanf(ficheiro, "%[^.].", expressao);
     return expressao;
 }
 
