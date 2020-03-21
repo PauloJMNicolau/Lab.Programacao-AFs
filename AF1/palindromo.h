@@ -1,7 +1,7 @@
 #define MAX 50
 
 typedef struct palindromo{
-    char * palavra;
+    wchar_t* palavra;
     struct palindromo * proximo;
 }Palindromos;
 
@@ -11,34 +11,34 @@ Palindromos * criarLista();
 //Apagar Lista
 void apagarLista(Palindromos * lista);
 //Ler uma Frase do ficheiro
-char * lerExpressao(FILE * ficheiro);
+wchar_t * lerExpressao(FILE * ficheiro);
 //Ler uma palavra do ficheiro
-char * lerPalavra(FILE * ficheiro);
+wchar_t * lerPalavra(FILE * ficheiro);
 //Remover Carateres especiais
-void removerCarateresEspeciais(int pos, int i, char * expressao);
+void removerCarateresEspeciais(int pos, int i, wchar_t * expressao);
 //Simplificar Carateres da Expressao
-char * simplificar(char * expressao);
+wchar_t * simplificar(wchar_t * expressao);
 //Avalia se Palavra ou Expressao é Palindromo
 //Retorna 0 se não for
 //Retorna 1 se for
-int ePalindromo(char * expressao);
+int ePalindromo(wchar_t * expressao);
 //Avaliar Palavra
 //Retorna 0 se não for
 //Retorna 1 se for
-int verificaPalavra(char * expressao);
+int verificaPalavra(wchar_t * expressao);
 //Avaliar Expressão
 //Retorna 0 se não for
 //Retorna 1 se for
-int verificaExpressao(char * expressao);
+int verificaExpressao(wchar_t * expressao);
 //Contar Elementos da Lista
 int contarElementos(Palindromos * lista);
 //Ler Ficheiro de Texto
 Palindromos * lerFicheiro(char * ficheiro, int modo);
 //Converter Carateres
-char converterCarater(char carater);
+wchar_t converterCarater(wchar_t carater);
 //Imprimir Lista
 void imprimirLista(Palindromos * lista);
 //Imprimir Elemento
 void imprimir(Palindromos * lista);
 
-void removerEspaco(char * expressao);
+void removerEspaco(wchar_t* expressao);

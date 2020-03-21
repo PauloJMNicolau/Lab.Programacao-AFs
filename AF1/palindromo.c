@@ -34,7 +34,7 @@ void apagarLista(Palindromos * lista){
 }
 
 //Inserir na Lista
-Palindromos * inserirNaLista(Palindromos * lista, char * palavra){
+Palindromos * inserirNaLista(Palindromos * lista, wchar_t* palavra){
     Palindromos * novo = criarLista();
     novo->palavra = palavra;
     novo->proximo = lista;
@@ -60,13 +60,14 @@ Palindromos * lerFicheiro(char * ficheiro, int modo){
         exit(EXIT_FAILURE);
     }
     Palindromos * lista=NULL;
-    char16_t * expressao = NULL;
+    wchar_t * expressao = NULL;
     while(!feof(fp)){
         if(modo){
             expressao = lerExpressao(fp);
             removerEspaco(expressao);
             if(verificaExpressao(expressao))
                 lista = inserirNaLista(lista,expressao);
+
         }
         else{
             expressao = lerPalavra(fp);
@@ -74,46 +75,47 @@ Palindromos * lerFicheiro(char * ficheiro, int modo){
             if(verificaPalavra(expressao))
                 lista = inserirNaLista(lista,expressao);
         }
-        
-        
     }
     fclose(fp);
     return lista;
 }
 
 //Ler uma Frase do ficheiro
-char16_t * lerExpressao(FILE * ficheiro){
-    char16_t * expressao = calloc(MAX,sizeof(char));
+wchar_t * lerExpressao(FILE * ficheiro){
+    wchar_t * expressao = calloc(MAX,sizeof(wchar_t));
     if(!expressao){
         printf("Erro: Não foi possivel alocar memória para palavra");
         exit(EXIT_FAILURE);
     }
-
-    //fscanf(ficheiro, "%[^.].", expressao);
+    fwscanf(ficheiro, L"%l[^.].", expressao);
     return expressao;
 }
 
 //Ler uma palavra do ficheiro
-char * lerPalavra(FILE * ficheiro){
-    char * expressao = calloc(MAX,sizeof(char));
+wchar_t* lerPalavra(FILE * ficheiro){
+    wchar_t* expressao = calloc(MAX,sizeof(wchar_t));
     if(!expressao){
         printf("Erro: Não foi possivel alocar memória para palavra");
         exit(EXIT_FAILURE);
     }
-    fscanf(ficheiro, "%s", expressao);
+    fwscanf(ficheiro, L"%ls", expressao);
     return expressao;
 }
 
 //Avaliar Expressão
 //Retorna 0 se não for
 //Retorna 1 se for
-int verificaExpressao(char * expressao){
-    char * aux = simplificar(expressao);
-    if(strcmp(aux,"") !=0 && ePalindromo(aux)){
+int verificaExpressao(wchar_t* expressao){
+    wchar_t* aux = simplificar(expressao);
+    if(wcscmp(aux,L"") !=0 && ePalindromo(aux)){
         free(aux);
         aux = NULL;
         return 1;
     }
+    free(expressao);
+    expressao=NULL;
+    free(aux);
+    aux = NULL;
     return 0;
     
 }
@@ -121,23 +123,27 @@ int verificaExpressao(char * expressao){
 //Avaliar Palavra
 //Retorna 0 se não for
 //Retorna 1 se for
-int verificaPalavra(char * expressao){
-    char * aux = simplificar(expressao);
-    int tamanho = strlen(aux);
+int verificaPalavra(wchar_t* expressao){
+    wchar_t* aux = simplificar(expressao);
+    int tamanho = wcslen(aux);
     if((tamanho>=3 && tamanho<=10) && ePalindromo(aux)){
         free(aux);
         aux=NULL;
         return 1;
     }
+    free(expressao);
+    expressao=NULL;
+    free(aux);
+    aux = NULL;
     return 0;
 }
 
 //Avalia se Palavra ou Expressao é Palindromo
 //Retorna 0 se não for
 //Retorna 1 se for
-int ePalindromo(char * expressao){
+int ePalindromo(wchar_t* expressao){
     if(expressao){
-        int tamanho = strlen(expressao);
+        int tamanho = wcslen(expressao);
         for(int i=0,e=tamanho-1; i<tamanho/2;i++,e--){
             if(expressao[i]!=expressao[e])
                 return 0;
@@ -148,20 +154,20 @@ int ePalindromo(char * expressao){
 }
 
 //Simplificar Carateres da Expressao
-char * simplificar(char * expressao){
-    char * aux = calloc(strlen(expressao)+1,sizeof(char));
+wchar_t* simplificar(wchar_t* expressao){
+    wchar_t* aux = calloc(wcslen(expressao)+1,sizeof(wchar_t));
     if(!aux){
         printf("Erro: Não foi possivel alocar memória para palavra");
         exit(EXIT_FAILURE);
     }
-    snprintf(aux,strlen(expressao)+1,"%s", expressao);
+    swprintf(aux,wcslen(expressao)+1,L"%ls", expressao);
     removerCarateresEspeciais(0,0,aux);
     return aux;
 }
 
 //Remover Carateres especiais
-void removerCarateresEspeciais(int pos, int i, char * expressao){
-    char aux = converterCarater(expressao[i]);
+void removerCarateresEspeciais(int pos, int i, wchar_t* expressao){
+    wchar_t aux = converterCarater(expressao[i]);
     if(isalpha(aux)){
         expressao[pos]=aux;
         removerCarateresEspeciais(pos+1,i+1,expressao);
@@ -172,32 +178,49 @@ void removerCarateresEspeciais(int pos, int i, char * expressao){
 }
 
 //Converter Carateres
-char converterCarater(char carater){
-    carater = tolower(carater);
-    if(carater == -61/*131*/ || carater ==-29/*132*/ || carater ==-95/*133*/ || carater ==134 || carater==160 || carater==198)
-        return 'a';
-    else if(carater ==136 || carater ==137 ||carater ==138)
-        return 'e';
-    else if(carater ==139 ||carater ==140 ||carater ==141 ||carater ==161 ||carater ==213)
-        return 'i';
-    else if(carater ==147 || carater ==148 || carater ==149 ||carater ==162)
-        return 'o';
-    else if(carater ==150 ||carater ==151 ||carater ==163)
-        return 'u';
-    else if (carater == 135)
-        return 'c';
-    else if (carater==164)
-        return 'n';
-    else    
-        return carater;
+wchar_t converterCarater(wchar_t carater){
+    carater = towlower(carater);
+    switch (carater){
+        case L'á':
+        case L'à':
+        case L'ã':
+        case L'â':
+            return L'a';
+        case L'é':
+        case L'è':
+        case L'ẽ':
+        case L'ê':
+            return L'e';
+        case L'í':
+        case L'ì':
+        case L'ĩ':
+        case L'î':
+            return L'i';
+        case L'ó':
+        case L'ò':
+        case L'õ':
+        case L'ô':
+            return L'o';
+        case L'ú':
+        case L'ù':
+        case L'ũ':
+        case L'û':
+            return L'u';
+        case L'ñ':
+            return L'n';
+        case L'ç':
+            return L'c';
+        default:
+            return carater;
+    }
 }
 
 //Imprimir Lista
 void imprimirLista(Palindromos * lista){
     int tamanho = contarElementos(lista);
-    printf("Existem %d elementos que são palindromos no ficheiro.\n", tamanho);
+    wprintf(L"Existem %d elementos que são palindromos no ficheiro.\n", tamanho);
     if(tamanho){
-        printf("A lista de elementos encontradas é:\n");
+        wprintf(L"A lista de elementos encontradas é:\n");
         imprimir(lista);
     }
 }
@@ -206,24 +229,24 @@ void imprimirLista(Palindromos * lista){
 void imprimir(Palindromos * lista){
     if(lista){
         imprimir(lista->proximo);
-        printf("\t%s\n", lista->palavra);
+        wprintf(L"\t%S \n", lista->palavra);
     }
 }
 
-void removerEspaco(char * expressao){
+void removerEspaco(wchar_t* expressao){
     int pos =0;
     while(expressao[pos]==' ' || expressao[pos] == '\n'){
         pos++;
     }
     if(pos!=0){
         int aux = pos;
-        int tamanho = strlen(expressao);
-        char * temp= calloc(tamanho,sizeof(char));
+        int tamanho = wcslen(expressao);
+        wchar_t* temp= calloc(tamanho,sizeof(wchar_t));
         while(pos<tamanho){
             temp[pos-aux]=expressao[pos];
             pos++;
         }
-        snprintf(expressao, tamanho,"%s", temp);
+        swprintf(expressao, tamanho,L"%ls", temp);
         free(temp);
         temp=NULL;
     }
