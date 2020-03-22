@@ -22,9 +22,9 @@ int main(){
 
     //Solicitar modo de pesquisa
     do{
-        wprintf(L"Qual o modo de pesquisa que pretende fazer?\n\t0 - Palavras\n\t1-Frases\nModo: ");
+        wprintf(L"Qual o modo de pesquisa que pretende fazer?\n\t0 - Palavras\n\t1 - Frases\n\t2 - Palindromos Internos\nModo: ");
         scanf("%d", &modo);
-    }while(modo<0 || modo >=2);
+    }while(modo<0 || modo >=3);
 
     lista = lerFicheiro(ficheiro,modo);
     //Apagar consola

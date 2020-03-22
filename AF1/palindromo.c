@@ -62,18 +62,26 @@ Palindromos * lerFicheiro(char * ficheiro, int modo){
     Palindromos * lista=NULL;
     wchar_t * expressao = NULL;
     while(!feof(fp)){
-        if(modo){
+        switch (modo){
+        case 0:
             expressao = lerExpressao(fp);
             removerEspaco(expressao);
             if(verificaExpressao(expressao))
                 lista = inserirNaLista(lista,expressao);
-
-        }
-        else{
+            break;
+        case 1:
             expressao = lerPalavra(fp);
             removerEspaco(expressao);
             if(verificaPalavra(expressao))
                 lista = inserirNaLista(lista,expressao);
+        case 2:
+            expressao = lerExpressao(fp);
+            removerEspaco(expressao);
+            procuraNaExpressao(expressao,lista);
+            break;
+        default:
+            wprintf(L"Modo não reconhecido!");
+            break;
         }
     }
     fclose(fp);
@@ -117,7 +125,6 @@ int verificaExpressao(wchar_t* expressao){
     free(aux);
     aux = NULL;
     return 0;
-    
 }
 
 //Avaliar Palavra
@@ -233,6 +240,7 @@ void imprimir(Palindromos * lista){
     }
 }
 
+//Remover Espaços em branco no inicio das frases
 void removerEspaco(wchar_t* expressao){
     int pos =0;
     while(expressao[pos]==' ' || expressao[pos] == '\n'){
@@ -242,6 +250,10 @@ void removerEspaco(wchar_t* expressao){
         int aux = pos;
         int tamanho = wcslen(expressao);
         wchar_t* temp= calloc(tamanho,sizeof(wchar_t));
+        if(!temp){
+            printf("Erro: Não foi possivel alocar memória para palavra");
+            exit(EXIT_FAILURE);
+        }
         while(pos<tamanho){
             temp[pos-aux]=expressao[pos];
             pos++;
@@ -249,5 +261,37 @@ void removerEspaco(wchar_t* expressao){
         swprintf(expressao, tamanho,L"%ls", temp);
         free(temp);
         temp=NULL;
+    }
+}
+
+//Verificar Palindromos no meio de frases
+void procuraNaExpressao(wchar_t * expressao, Palindromos * lista){
+    if(wcscmp(expressao+1, L"\0") != 0)
+        procuraNaExpressao(expressao+1, lista);
+    int tamanho = wcslen(expressao); 
+    if(tamanho > 1){
+        wchar_t * temp = calloc(tamanho, sizeof(wchar_t));
+        if(!temp){
+            printf("Erro: Não foi possivel alocar memória para palavra");
+            exit(EXIT_FAILURE);
+        }
+        for(int i=0; i<=tamanho;i++){
+            wchar_t * aux = calloc(tamanho, sizeof(wchar_t));
+            if(!aux){
+                printf("Erro: Não foi possivel alocar memória para palavra");
+                exit(EXIT_FAILURE);
+            }
+            wcsncpy(aux, expressao,tamanho-i);
+            wcsncpy(temp, aux, wcslen(aux));
+            temp = simplificar(temp);
+            if(ePalindromo(temp)&& wcslen(temp)>1 && wcscmp(temp, L" "))
+                lista = inserirNaLista(lista,aux);
+            else {
+                free(aux);
+                aux = NULL;
+            }
+        }
+        free(temp);
+        temp = NULL;        
     }
 }

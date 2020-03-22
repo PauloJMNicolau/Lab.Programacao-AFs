@@ -1,4 +1,4 @@
-#define MAX 50
+#define MAX 100
 
 typedef struct palindromo{
     wchar_t* palavra;
@@ -40,5 +40,9 @@ wchar_t converterCarater(wchar_t carater);
 void imprimirLista(Palindromos * lista);
 //Imprimir Elemento
 void imprimir(Palindromos * lista);
-
+//Remover Espaços em branco no inicio das frases
 void removerEspaco(wchar_t* expressao);
+
+
+//Verificar Palindromos no meio de frases
+void procuraNaExpressao(wchar_t * expressao, Palindromos * lista);
