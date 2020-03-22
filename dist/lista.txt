@@ -1,53 +1,47 @@
-aa
-açoca
-sacas
-rapar
-1221
---kjjk--
-rodador
-anilina
-aia
-aça
-ala
-ama
-Ana
-anilina
-arara
-asa
-ata
-ele
-esse
-mamam
-matam
-metem
-mirim
-mussum
-oco
-osso
-ovo
-racificar
-radar
-raiar
-ralar
-ramar
-rapar
-rasar
-reger
-reler
-reter
-rever
-reviver
-rir
-rodador
-sacas
-saias
-salas
-socos
-aa
-bb
-aprovado
-amigo pessoal
-amigo
-negro
-apoio ola
-regra geral foi
+    afã;
+    aia;
+    ala;
+    ama;
+    1254
+    2332
+    Ana;
+    anã;
+    anilina;
+    arara;
+    asa;
+    ata;
+    ele;
+    esse;
+    mamam;
+    matam;
+    metem;
+    medo
+    rede
+    mirim;
+    mussum;
+    oco;
+    omissíssimo;
+    osso;
+    ovo;
+    racificar;
+    radar;
+    raiar;
+    ralar;
+    ramar;
+    rapar;
+    rasar;
+    reger;
+    reler;
+    reter;
+    rever;
+    reviver;
+    rir;
+    rodador;
+    sacas;
+    saias;
+    salas;
+    socos;
+    sós.
+    aa
+    olá
+    adeus

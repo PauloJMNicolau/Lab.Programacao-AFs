@@ -233,6 +233,7 @@ void imprimir(Palindromos * lista){
     }
 }
 
+//Remover Espaços brancos no inicio da frase
 void removerEspaco(wchar_t* expressao){
     int pos =0;
     while(expressao[pos]==' ' || expressao[pos] == '\n'){
